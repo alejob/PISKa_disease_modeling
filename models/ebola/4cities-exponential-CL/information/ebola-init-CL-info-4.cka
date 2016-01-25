@@ -1,4 +1,3 @@
-
 #%use:
 #Population_vars
 %var: 'pop-init' 100000 #5898612
@@ -7,24 +6,24 @@
 #Population_ratios
 %var: 'Santiago-pop-rate' 1.0
 %var: 'Valparaiso-pop-rate' 0.158
-%var: 'La Serena-pop-rate' 0.07
+%var: 'La_Serena-pop-rate' 0.07
 %var: 'Rancagua-pop-rate' 0.047
 
 #Populations
 %var: 'Santiago-pop' 1.0*'pop-init'
 %var: 'Valparaiso-pop' 0.158*'pop-init'
-%var: 'La Serena-pop' 0.07*'pop-init'
+%var: 'La_Serena-pop' 0.07*'pop-init'
 %var: 'Rancagua-pop' 0.047*'pop-init'
 
 #cities_area
 %compartment: 'Santiago' 1.0
 %compartment: 'Valparaiso' 0.373
-%compartment: 'La Serena' 0.167
+%compartment: 'La_Serena' 0.167
 %compartment: 'Rancagua' 0.109
 
 #travel_time_at_100kmh
-%link: 'highway' 'La Serena' <-> 'Valparaiso' $0.18
-%link: 'highway' 'La Serena' <-> 'Santiago' $0.2
+%link: 'highway' 'La_Serena' <-> 'Valparaiso' $0.18
+%link: 'highway' 'La_Serena' <-> 'Santiago' $0.2
 %link: 'highway' 'Valparaiso' <-> 'Santiago' $0.048
 %link: 'highway' 'Santiago' <-> 'Rancagua' $0.042
 
@@ -35,8 +34,8 @@
 %transport: <move-free>'highway' Person(c~I) @ 1/60
 
 #Initial_populations
-%use: 'La Serena'  
-%init: 'La Serena-pop' Person(c~S)
+%use: 'La_Serena'  
+%init: 'La_Serena-pop' Person(c~S)
 
 %use: 'Valparaiso'  
 %init: 'Valparaiso-pop' Person(c~S)

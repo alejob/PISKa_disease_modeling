@@ -23,17 +23,13 @@
 %agent: Removed()
 
 #Transmision
-#'w/Infected' Person(c~S),Person(c~I) -> Person(c~E),Person(c~I) @ 'infected-transmission'/'N'
-#'w/Dead' Person(c~S),Dead(d~I) -> Person(c~E),Dead(d~I) @ 'dead-transmission'/'N'
+'P w/Infected(0)' Person(c~S),Person(c~I,info~zero) -> Person(c~E),Person(c~I,info~zero) @* 'infected-transmission'/'N'
+'P w/Infected(+)' Person(c~S),Person(c~I,info~pos) -> Person(c~E),Person(c~I,info~pos) @* 'infected-transmission'/'N'/10
+'P w/Infected(-)' Person(c~S),Person(c~I,info~neg) -> Person(c~E),Person(c~I,info~neg) @* 'infected-transmission'/'N'
 
-#Transmision
-'P w/Infected(0)' Person(c~S),Person(c~I,info~zero) -> Person(c~E),Person(c~I,info~zero) @* 'infected-transmission'/'N'/2
-'P w/Infected(+)' Person(c~S),Person(c~I,info~pos) -> Person(c~E),Person(c~I,info~pos) @* 'infected-transmission'/'N'/2/10
-'P w/Infected(-)' Person(c~S),Person(c~I,info~neg) -> Person(c~E),Person(c~I,info~neg) @* 'infected-transmission'/'N'/2
-
-'P(0) w/Infected' Person(c~S,info~zero),Person(c~I) -> Person(c~E, info~zero),Person(c~I) @* 'infected-transmission'/'N'/2
-'P(+) w/Infected' Person(c~S,info~pos),Person(c~I) -> Person(c~E, info~pos),Person(c~I) @* 'infected-transmission'/'N'/2/5
-'P(-) w/Infected' Person(c~S,info~neg),Person(c~I) -> Person(c~E, info~neg),Person(c~I) @* 'infected-transmission'/'N'/2*1.5
+'P(0) w/Infected' Person(c~S,info~zero),Person(c~I) -> Person(c~E, info~zero),Person(c~I) @* 'infected-transmission'/'N'
+'P(+) w/Infected' Person(c~S,info~pos),Person(c~I) -> Person(c~E, info~pos),Person(c~I) @* 'infected-transmission'/'N'/5
+'P(-) w/Infected' Person(c~S,info~neg),Person(c~I) -> Person(c~E, info~neg),Person(c~I) @* 'infected-transmission'/'N'*1.5
 
 'P(0) w/Dead' Person(c~S,info~zero),Dead(d~I) -> Person(c~E,info~zero),Dead(d~I) @* 'dead-transmission'/'N'
 'P(+) w/Dead' Person(c~S,info~pos),Dead(d~I) -> Person(c~E,info~pos),Dead(d~I) @* 'dead-transmission'/'N'/10
