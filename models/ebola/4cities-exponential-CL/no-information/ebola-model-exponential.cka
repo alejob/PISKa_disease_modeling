@@ -1,0 +1,35 @@
+#Parameters based on Weitz & Dusshof, "Modeling post-death transmission of Ebola: challenges for inference and opportunities for control.", Scientific Report, 2015.
+
+
+#Parameters
+%var: 'infected-transmission' 0.25
+%var: 'dead-transmission' 0.2
+%var: 'death-rate' 0.7
+%var: 'T_D' 1.0/4.0
+%var: 'T_E' 1.0/11.0
+%var: 'T_I' 1.0/6.0
+
+#Vars
+%var: 'S' Person(c~S)
+%var: 'E' Person(c~E)
+%var: 'I' Person(c~I)
+%var: 'R' Removed()
+%var: 'D' Dead()
+%var: 'N' 'S'+'E'+'I'+'R'
+
+#Agents
+%agent: Person(c~S~E~I)
+%agent: Dead(d~I~R)
+%agent: Removed()
+
+#Transmision
+'w/Infected' Person(c~S),Person(c~I) -> Person(c~E),Person(c~I) @ 'infected-transmission'/'N'
+'w/Dead' Person(c~S),Dead(d~I) -> Person(c~E),Dead(d~I) @ 'dead-transmission'/'N'
+
+#Time
+'infect' Person(c~E) -> Person(c~I) @ 'T_E'
+
+'Die' Person(c~I) -> Dead(d~I) @ 'death-rate'*'T_I'
+'live' Person(c~I) -> Removed() @ (1-'death-rate')*'T_I'
+
+'bury' Dead(d~I) -> Dead(d~R) @ 'T_D' 

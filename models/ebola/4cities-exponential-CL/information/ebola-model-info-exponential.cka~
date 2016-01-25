@@ -1,0 +1,55 @@
+#Parameters based on Weitz & Dusshof, "Modeling post-death transmission of Ebola: challenges for inference and opportunities for control.", Scientific Report, 2015.
+
+
+#Parameters
+%var: 'infected-transmission' 0.25
+%var: 'dead-transmission' 0.2
+%var: 'death-rate' 0.7
+%var: 'T_D' 1.0/4.0
+%var: 'T_E' 1.0/11.0
+%var: 'T_I' 1.0/6.0
+
+#Vars
+%var: 'S' Person(c~S)
+%var: 'E' Person(c~E)
+%var: 'I' Person(c~I)
+%var: 'R' Removed()
+%var: 'D' Dead()
+%var: 'N' 'S'+'E'+'I'+'R'
+
+#Agents
+%agent: Person(c~S~E~I, info~zero~pos~neg)
+%agent: Dead(d~I~R)
+%agent: Removed()
+
+#Transmision
+#'w/Infected' Person(c~S),Person(c~I) -> Person(c~E),Person(c~I) @ 'infected-transmission'/'N'
+#'w/Dead' Person(c~S),Dead(d~I) -> Person(c~E),Dead(d~I) @ 'dead-transmission'/'N'
+
+#Transmision
+'P w/Infected(0)' Person(c~S),Person(c~I,info~zero) -> Person(c~E),Person(c~I,info~zero) @* 'infected-transmission'/'N'/2
+'P w/Infected(+)' Person(c~S),Person(c~I,info~pos) -> Person(c~E),Person(c~I,info~pos) @* 'infected-transmission'/'N'/2/10
+'P w/Infected(-)' Person(c~S),Person(c~I,info~neg) -> Person(c~E),Person(c~I,info~neg) @* 'infected-transmission'/'N'/2
+
+'P(0) w/Infected' Person(c~S,info~zero),Person(c~I) -> Person(c~E, info~zero),Person(c~I) @* 'infected-transmission'/'N'/2
+'P(+) w/Infected' Person(c~S,info~pos),Person(c~I) -> Person(c~E, info~pos),Person(c~I) @* 'infected-transmission'/'N'/2/5
+'P(-) w/Infected' Person(c~S,info~neg),Person(c~I) -> Person(c~E, info~neg),Person(c~I) @* 'infected-transmission'/'N'/2*1.5
+
+'P(0) w/Dead' Person(c~S,info~zero),Dead(d~I) -> Person(c~E,info~zero),Dead(d~I) @* 'dead-transmission'/'N'
+'P(+) w/Dead' Person(c~S,info~pos),Dead(d~I) -> Person(c~E,info~pos),Dead(d~I) @* 'dead-transmission'/'N'/10
+'P(-) w/Dead' Person(c~S,info~neg),Dead(d~I) -> Person(c~E,info~neg),Dead(d~I) @* 'dead-transmission'/'N'*1.5
+
+#Time
+'infect' Person(c~E) -> Person(c~I) @ 'T_E'
+
+'Die' Person(c~I) -> Dead(d~I) @ 'death-rate'*'T_I'
+'live' Person(c~I) -> Removed() @ (1-'death-rate')*'T_I'
+
+'bury' Dead(d~I) -> Dead(d~R) @ 'T_D' 
+
+#Information
+'SEI inform+' Person(info~zero) -> Person(info~pos) @ 0.0
+'SEI inform-' Person(info~zero) -> Person(info~neg) @ 0.05
+'SEI inform- +' Person(info~neg) -> Person(info~pos) @0.00
+'I inform+' Person(c~I,info~zero) -> Person(c~I,info~pos) @ 0.1
+'I inform-' Person(c~I,info~zero) -> Person(c~I,info~neg) @ 0.005
