@@ -5,10 +5,11 @@ Rscript simPlots.R
 mv Rplots.pdf $@
 endef
 
-
-
 time:
-	time mpirun -n 4 PISKa -i ebola-model-exponential.cka -i ebola-init-CL-4.cka  -i ebola-all_obs.cka -p 100 -t 100 -sync-t 1
+	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 100 -t 400 -sync-t 1
+
+mod-info:
+	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -i ebola-info_pert-fast.cka -p 100 -t 400 -sync-t 1
 
 base.simdir: base.model.cka base.city.cka base.obs.cka
 
@@ -24,7 +25,7 @@ new.simdir: new.model.cka new.city.cka base.obs.cka
 		-i $(filter %.model.cka, $^) \
 		-i $(filter %.city.cka, $^) \
 		-i $(filter %.obs.cka, $^) \
-		-p 100 -t 100 -sync-t 1
+		-p 100 -t 400 -sync-t 1
 	mkdir $@
 	$(MV) *.out $@
 

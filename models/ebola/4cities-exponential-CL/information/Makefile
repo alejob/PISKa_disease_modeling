@@ -1,12 +1,22 @@
 MVF = /bin/mv -f
 MV = /bin/mv
+define run-R =
+Rscript simPlots.R
+mv Rplots.pdf $@
+endef
+
+
 
 time:
-	time mpirun -n 4 PISKa -i ebola-model-info-exponential.cka -i ebola-init-CL-info-4.cka  -i ebola-all_obs.cka -p 100 -t 100 -sync-t 1
+	time mpirun -n 4 PISKa -i ebola-model-info-exponential.cka -i ebola-init-CL-info-4.cka  -i ebola-all_obs.cka -p 100 -t 100 -sync-t 1 -o test_ 
 
 base.simdir: base.model.cka base.city.cka base.obs.cka
 
+#base.simdir: %.model.cka %.city.cka %.obs.cka
+
 new.simdir: new.model.cka new.city.cka base.obs.cka
+
+#base.plots.Rout: 
 
 %.simdir: 
 	- $(MVF) $@ .$@
@@ -19,4 +29,5 @@ new.simdir: new.model.cka new.city.cka base.obs.cka
 	$(MV) *.out $@
 
 %.plots.Rout: %.simdir simPlots.R
-	$(run-R)
+	#$(run-R)
+	Rscript simPlots.R

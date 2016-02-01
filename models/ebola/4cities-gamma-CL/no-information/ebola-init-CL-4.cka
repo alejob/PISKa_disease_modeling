@@ -1,6 +1,6 @@
-#%use:
+
 #Population_vars
-%var: 'pop-init' 1000 #5898612
+%var: 'pop-init' 100000
 %var: 'infected-init' 1
 
 #Population_ratios
@@ -28,10 +28,8 @@
 %link: 'highway' 'Santiago' <-> 'Rancagua' $0.042
 
 #Transports
-%transport: <move-free> 'highway' Person(c~E,info~zero) @ 1/5
-%transport: <move-free> 'highway' Person(c~E,info~pos) @ 1/15
-%transport: <move-free> 'highway' Person(c~E,info~neg) @ 1/5
-%transport: <move-free>'highway' Person(c~I) @ 1/60
+%transport: 'highway' Person(c~E) @ 1/15 #0.02
+%transport: 'highway' Person(c~I) @ 1/60
 
 #Initial_populations
 %use: 'La_Serena'  
@@ -42,7 +40,7 @@
 
 %use: 'Santiago'  
 %init: 'Santiago-pop' Person(c~S)
-%init: 'infected-init' Person(c~I, info~zero)
+%init: 'infected-init' Person(c~I,d!1),Day(i1!1)
 
 %use: 'Rancagua'  
 %init: 'Rancagua-pop' Person(c~S)

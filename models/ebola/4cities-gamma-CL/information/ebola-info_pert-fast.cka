@@ -1,0 +1,3 @@
+
+%mod: [T] > 5 do $UPDATE 'SEI inform+' 1/5
+%mod: [T] > 12 do $UPDATE 'SEI inform+' 0.0

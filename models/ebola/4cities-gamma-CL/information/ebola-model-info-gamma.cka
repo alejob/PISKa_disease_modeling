@@ -1,0 +1,59 @@
+
+%use:
+#Parameters
+%var: 'infected-transmission' 0.25
+%var: 'dead-transmission' 0.2
+%var: 'death-rate' 0.7
+%var: 'day-rate' 1.0
+%var: 'T_D' 1.0/4.0
+%var: 'T_E' 1.0/11.0
+%var: 'T_I' 1.0/6.0
+
+#Vars
+%var: 'S' Person(c~S)
+%var: 'E' Person(c~E)
+%var: 'I' Person(c~I)
+%var: 'R' Removed()
+%var: 'D' Dead()
+%var: 'N' 'S'+'E'+'I'+'R'
+
+#Agents
+%agent: Person(c~S~E~I, info~zero~neg~pos,d)
+%agent: Dead(d~I~R)
+%agent: Removed()
+%agent: Day(i1,i2)
+
+
+#Transmision
+'P w/Infected(0)' Person(c~S,d),Person(c~I,info~zero) -> Person(c~E,d!1),Person(c~I,info~zero),Day(i1!1) @* 'infected-transmission'/'N'/2
+'P w/Infected(+)' Person(c~S,d),Person(c~I,info~pos) -> Person(c~E,d!1),Person(c~I,info~pos),Day(i1!1) @* 'infected-transmission'/'N'/2/10
+'P w/Infected(-)' Person(c~S,d),Person(c~I,info~neg) -> Person(c~E,d!1),Person(c~I,info~neg),Day(i1!1) @* 'infected-transmission'/'N'/2
+
+'P(0) w/Infected' Person(c~S,d,info~zero),Person(c~I) -> Person(c~E,d!1,info~zero),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2
+'P(+) w/Infected' Person(c~S,d,info~pos),Person(c~I) -> Person(c~E,d!1,info~pos),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2/5
+'P(-) w/Infected' Person(c~S,d,info~neg),Person(c~I) -> Person(c~E,d!1,info~neg),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2*1.5
+
+'P(0) w/Dead' Person(c~S,d,info~zero),Dead(d~I) -> Person(c~E,d!1,info~zero),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'
+'P(+) w/Dead' Person(c~S,d,info~pos),Dead(d~I) -> Person(c~E,d!1,info~pos),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'/10
+'P(-) w/Dead' Person(c~S,d,info~neg),Dead(d~I) -> Person(c~E,d!1,info~neg),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'*1.5
+
+#Time
+'replication' Day(i1!_,i2) -> Day(i1!_,i2!1),Day(i1!1,i2) @ 'day-rate'
+
+'infect' Person(c~E,d!0),Day(i1!0,i2!1),Day(i1!1,i2!2),Day(i1!2,i2!3),Day(i1!3,i2!4),Day(i1!4,i2!5),Day(i1!5,i2!6),Day(i1!6,i2!7),Day(i1!7,i2!8),Day(i1!8,i2!9),Day(i1!9,i2!10),Day(i1!10,i2!11),Day(i1!11,i2) ->\
+			Person(c~I,d) @ [inf]
+
+'Die' Person(c~I) -> Dead(d~I) @ 'death-rate'*'T_I'
+'live' Person(c~I) -> Removed() @ (1-'death-rate')*'T_I'
+
+'bury' Dead(d~I) -> Dead(d~R) @ 'T_D' 
+
+#Information
+'SEI inform+' Person(info~zero) -> Person(info~pos) @ 0.0
+'SEI inform-' Person(info~zero) -> Person(info~neg) @ 0.05
+'SEI inform- +' Person(info~neg) -> Person(info~pos) @0.00
+'I inform+' Person(c~I,info~zero) -> Person(c~I,info~pos) @ 0.1
+'I inform-' Person(c~I,info~zero) -> Person(c~I,info~neg) @ 0.005
+
+#Clean
+'remove days' Day(i1) ->  @ [inf]
