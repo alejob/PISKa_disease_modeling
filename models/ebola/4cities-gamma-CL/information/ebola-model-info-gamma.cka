@@ -4,7 +4,7 @@
 %var: 'infected-transmission' 0.25
 %var: 'dead-transmission' 0.2
 %var: 'death-rate' 0.7
-%var: 'day-rate' 1.0
+%var: 'day-rate' 6.0/11.0
 %var: 'T_D' 1.0/4.0
 %var: 'T_E' 1.0/11.0
 %var: 'T_I' 1.0/6.0
@@ -40,7 +40,7 @@
 #Time
 'replication' Day(i1!_,i2) -> Day(i1!_,i2!1),Day(i1!1,i2) @ 'day-rate'
 
-'infect' Person(c~E,d!0),Day(i1!0,i2!1),Day(i1!1,i2!2),Day(i1!2,i2!3),Day(i1!3,i2!4),Day(i1!4,i2!5),Day(i1!5,i2!6),Day(i1!6,i2!7),Day(i1!7,i2!8),Day(i1!8,i2!9),Day(i1!9,i2!10),Day(i1!10,i2!11),Day(i1!11,i2) ->\
+'infect' Person(c~E,d!0),Day(i1!0,i2!1),Day(i1!1,i2!2),Day(i1!2,i2!3),Day(i1!3,i2!4),Day(i1!4,i2!5),Day(i1!5,i2!6),Day(i1!6,i2) ->\
 			Person(c~I,d) @ [inf]
 
 'Die' Person(c~I) -> Dead(d~I) @ 'death-rate'*'T_I'
