@@ -28,13 +28,13 @@
 
 
 #Transmision
-'P w/Infected(0)' Person(c~S,d),Person(c~I,info~zero) -> Person(c~E,d!1),Person(c~I,info~zero),Day(i1!1) @* 'infected-transmission'/'N'/2
-'P w/Infected(+)' Person(c~S,d),Person(c~I,info~pos) -> Person(c~E,d!1),Person(c~I,info~pos),Day(i1!1) @* 'infected-transmission'/'N'/2/10
-'P w/Infected(-)' Person(c~S,d),Person(c~I,info~neg) -> Person(c~E,d!1),Person(c~I,info~neg),Day(i1!1) @* 'infected-transmission'/'N'/2
+'P w/Infected(0)' Person(c~S,d),Person(c~I,info~zero) -> Person(c~E,d!1),Person(c~I,info~zero),Day(i1!1) @* 'infected-transmission'/'N'
+'P w/Infected(+)' Person(c~S,d),Person(c~I,info~pos) -> Person(c~E,d!1),Person(c~I,info~pos),Day(i1!1) @* 'infected-transmission'/'N'/10
+'P w/Infected(-)' Person(c~S,d),Person(c~I,info~neg) -> Person(c~E,d!1),Person(c~I,info~neg),Day(i1!1) @* 'infected-transmission'/'N'
 
-'P(0) w/Infected' Person(c~S,d,info~zero),Person(c~I) -> Person(c~E,d!1,info~zero),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2
-'P(+) w/Infected' Person(c~S,d,info~pos),Person(c~I) -> Person(c~E,d!1,info~pos),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2/5
-'P(-) w/Infected' Person(c~S,d,info~neg),Person(c~I) -> Person(c~E,d!1,info~neg),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/2*1.5
+'P(0) w/Infected' Person(c~S,d,info~zero),Person(c~I) -> Person(c~E,d!1,info~zero),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'
+'P(+) w/Infected' Person(c~S,d,info~pos),Person(c~I) -> Person(c~E,d!1,info~pos),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'/5
+'P(-) w/Infected' Person(c~S,d,info~neg),Person(c~I) -> Person(c~E,d!1,info~neg),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'*1.5
 
 'P(0) w/Dead' Person(c~S,d,info~zero),Dead(d~I) -> Person(c~E,d!1,info~zero),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'
 'P(+) w/Dead' Person(c~S,d,info~pos),Dead(d~I) -> Person(c~E,d!1,info~pos),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'/10

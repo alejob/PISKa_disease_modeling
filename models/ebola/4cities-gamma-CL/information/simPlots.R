@@ -1,4 +1,4 @@
-city<-read.table("base.simdir/Santiago.out", col.names=c("time", "cases", "susceptible", "exposed", "infecte", "removed", "dead"))
+city<-read.table("base.simdir/Santiago.out", col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
 
 plot(city $time, city $cases, ann=F)
 
