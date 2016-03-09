@@ -2,7 +2,7 @@
 %use:
 #Population_vars
 %var: 'pop-init' 100000 #5898612
-%var: 'infected-init' 1
+%var: 'infected-init' 100
 
 #Population_ratios
 %var: 'Santiago-pop-rate' 1.0
@@ -19,12 +19,12 @@
 #cities_area
 %compartment: 'Santiago' 1.0
 %compartment: 'Valparaiso' 0.373
-%compartment: 'La Serena' 0.167
+%compartment: 'La_Serena' 0.167
 %compartment: 'Rancagua' 0.109
 
 #travel_time_at_100kmh
-%link: 'highway' 'La Serena' <-> 'Valparaiso' $0.18
-%link: 'highway' 'La Serena' <-> 'Santiago' $0.2
+%link: 'highway' 'La_Serena' <-> 'Valparaiso' $0.18
+%link: 'highway' 'La_Serena' <-> 'Santiago' $0.2
 %link: 'highway' 'Valparaiso' <-> 'Santiago' $0.048
 %link: 'highway' 'Santiago' <-> 'Rancagua' $0.042
 
@@ -35,15 +35,15 @@
 %transport: <move-join> 'highway' Person(c~I) @ 1/60
 
 #Initial_populations
-%use: 'La Serena'  
-%init: 'La Serena-pop' Person(c~S)
+%use: 'La_Serena'  
+%init: 'La Serena-pop' Person(c~S, info~zero)
 
 %use: 'Valparaiso'  
-%init: 'Valparaiso-pop' Person(c~S)
+%init: 'Valparaiso-pop' Person(c~S, info~zero)
 
 %use: 'Santiago'  
-%init: 'Santiago-pop' Person(c~S)
+%init: 'Santiago-pop' Person(c~S, info~zero)
 %init: 'infected-init' Person(c~I,d!1),Day(i1!1)
 
 %use: 'Rancagua'  
-%init: 'Rancagua-pop' Person(c~S)
+%init: 'Rancagua-pop' Person(c~S, info~zero)

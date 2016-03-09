@@ -1,4 +1,4 @@
-# time 'Cases' 'Succeptible' 'Exposed' 'Infected' 'Removed' 'Deads'
+ time 'Cases' 'Succeptible' 'Exposed' 'Infected' 'Removed' 'Deads'
  0.000000E+00 1 100000 0 1 0 0
  1.000000E+00 1 100000 0 0 0 1
  2.000000E+00 1 100000 0 0 0 1
