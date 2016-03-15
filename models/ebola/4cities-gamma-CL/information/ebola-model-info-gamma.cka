@@ -82,7 +82,7 @@
 'p+ p0' Person(info~pos),Person(info~zero) -> Person(info~pos),Person(info~pos) @ 0.05 
 'p- p0' Person(info~neg),Person(info~zero) -> Person(info~neg),Person(info~neg) @ 0.05 
 'p+ p-' Person(info~pos),Person(info~neg) -> Person(info~pos),Person(info~pos) @ 0.005
-'p- p+' Person(info~neg),Person(info~pos) -> Person(info~pos),Person(info~neg) @ 0.001
+'p- p+' Person(info~neg),Person(info~pos) -> Person(info~neg),Person(info~neg) @ 0.001
 
 
 #Clean
