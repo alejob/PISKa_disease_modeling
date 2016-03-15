@@ -14,6 +14,7 @@
 %var: 'T_D' 1.0/4.0
 %var: 'T_E' 1.0/11.0
 %var: 'T_I' 1.0/6.0
+%var: 'reactivity' 3.0
 
 
 #Agents
@@ -38,17 +39,17 @@
 # No _numbers_
 
 #Transmission and information
-'S_0 I_0' Person(c~S,d,info~zero),Person(c~I,info~zero) -> Person(c~E,info~zero,d!1),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/3
-'S_0 I_+' Person(c~S,d,info~zero),Person(c~I,info~pos) -> Person(c~E,info~zero,d!1),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/3/10
-'S_0 I_-' Person(c~S,d,info~zero),Person(c~I,info~neg) -> Person(c~E,info~zero,d!1),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/3*1.5
+'S_0 I_0' Person(c~S,d,info~zero),Person(c~I,info~zero) -> Person(c~E,info~zero,d!1),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/'reactivity'
+'S_0 I_+' Person(c~S,d,info~zero),Person(c~I,info~pos) -> Person(c~E,info~zero,d!1),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/'reactivity'/10
+'S_0 I_-' Person(c~S,d,info~zero),Person(c~I,info~neg) -> Person(c~E,info~zero,d!1),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/'reactivity'*1.5
 
-'S_- I_0' Person(c~S,d,info~neg),Person(c~I,info~zero) -> Person(c~E,d!1,info~neg),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/3*1.5
-'S_- I_+' Person(c~S,d,info~neg),Person(c~I,info~pos) -> Person(c~E,d!1,info~neg),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/3/5
-'S_- I_-' Person(c~S,d,info~neg),Person(c~I,info~neg) -> Person(c~E,d!1,info~neg),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/3*2.0
+'S_- I_0' Person(c~S,d,info~neg),Person(c~I,info~zero) -> Person(c~E,d!1,info~neg),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/'reactivity'*1.5
+'S_- I_+' Person(c~S,d,info~neg),Person(c~I,info~pos) -> Person(c~E,d!1,info~neg),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/'reactivity'/5
+'S_- I_-' Person(c~S,d,info~neg),Person(c~I,info~neg) -> Person(c~E,d!1,info~neg),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/'reactivity'*2.0
 
-'S_+ I_0' Person(c~S,d,info~pos),Person(c~I,info~zero) -> Person(c~E,d!1,info~pos),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/3
-'S_+ I_+' Person(c~S,d,info~pos),Person(c~I,info~pos) -> Person(c~E,d!1,info~pos),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/3/15
-'S_+ I_-' Person(c~S,d,info~pos),Person(c~I,info~neg) -> Person(c~E,d!1,info~pos),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/3
+'S_+ I_0' Person(c~S,d,info~pos),Person(c~I,info~zero) -> Person(c~E,d!1,info~pos),Person(c~I,info~zero),Day(i1!1) @* 'infectious_live'/'reactivity'
+'S_+ I_+' Person(c~S,d,info~pos),Person(c~I,info~pos) -> Person(c~E,d!1,info~pos),Person(c~I,info~pos),Day(i1!1) @* 'infectious_live'/'reactivity'/15
+'S_+ I_-' Person(c~S,d,info~pos),Person(c~I,info~neg) -> Person(c~E,d!1,info~pos),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/'reactivity'
 
 
 
