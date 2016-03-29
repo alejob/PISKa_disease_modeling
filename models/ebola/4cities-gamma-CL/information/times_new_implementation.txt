@@ -1,0 +1,6 @@
+100.000 agents: 45 min and I cancel it
+50.000 agents: freeze0
+20.800: 4.679
+20.000: 4.472
+10.000 agents: 2.704 seg.
+1.000 agents: 1.26 seg
