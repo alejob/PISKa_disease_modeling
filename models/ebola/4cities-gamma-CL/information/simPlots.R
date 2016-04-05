@@ -6,6 +6,7 @@ La_Serena <-read.table("base.simdir/La_Serena.out", col.names=c("time", "cases",
 cities <- Santiago + Valparaiso + Rancagua + La_Serena
 write.table(cities,"base.simdir/totalCities.out")
 
+#plot(cities $time, cities $cases, ann=F,col="red",xlim=c(0,2000),ylim=c(0,120000))
 plot(cities $time, cities $cases, ann=F,col="red")
 points(cities $time, cities $susceptible, ann=F, col="green")
 points(cities $time, cities $exposed, ann=F,col="blue")

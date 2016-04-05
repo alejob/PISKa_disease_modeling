@@ -4,3 +4,8 @@
 20.000: 4.472
 10.000 agents: 2.704 seg.
 1.000 agents: 1.26 seg
+
+precompile time: 9.8s
+100.000: 2m8s with precompiled
+100.000: 2m38s no-precompiled
+reduction ~20%

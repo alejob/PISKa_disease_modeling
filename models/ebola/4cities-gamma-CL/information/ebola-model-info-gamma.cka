@@ -52,7 +52,6 @@
 'S_+ I_-' Person(c~S,d,info~pos),Person(c~I,info~neg) -> Person(c~E,d!1,info~pos),Person(c~I,info~neg),Day(i1!1) @* 'infectious_live'/'reactivity'
 
 
-
 'S_0 D' Person(c~S,d,info~zero),Dead(d~I) -> Person(c~E,d!1,info~zero),Dead(d~I),Day(i1!1) @* 'infectious_dead'
 'S_+ D' Person(c~S,d,info~pos),Dead(d~I) -> Person(c~E,d!1,info~pos),Dead(d~I),Day(i1!1) @* 'infectious_dead'/10
 'S_- D' Person(c~S,d,info~neg),Dead(d~I) -> Person(c~E,d!1,info~neg),Dead(d~I),Day(i1!1) @* 'infectious_dead'*1.5
