@@ -2,7 +2,7 @@
 %use:
 #Population_vars
 %var: 'pop-init' 100000 #5898612
-%var: 'infected-init' 100
+%var: 'infected-init' 10
 
 #Population_ratios
 %var: 'Santiago-pop-rate' 1.0

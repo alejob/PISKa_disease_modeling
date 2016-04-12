@@ -1,17 +1,19 @@
 #%mod: [true] do $UPDATE 'infected-transmission' 1
 #%mod: [true] do $UPDATE 'dead-transmission' 1
-#%mod: [true] do $UPDATE 'death-rate' 1
+#%mod: [true] do $UPDATE 'case_fatality-proportion' 1
 #%mod: [true] do $UPDATE 'exposure-stages' 1
 #%mod: [true] do $UPDATE 'exposure-time' 1
+#%mod: [true] do $UPDATE 'Dead_contagious-time' 1
+#%mod: [true] do $UPDATE 'Infected-time' 1
 
 #information
-%mod: [true] do $UPDATE 'SEI inform+'	0.0                           
-%mod: [true] do $UPDATE 'SEI inform-'	0.05                            
-%mod: [true] do $UPDATE 'SEI inform- +'	0.00                           
-%mod: [true] do $UPDATE 'I inform+'  	0.8                       
-%mod: [true] do $UPDATE 'I inform-'	0.005
+%mod: [true] do $UPDATE 'SEI inform+_rate'	0.0                           
+%mod: [true] do $UPDATE 'SEI inform-_rate'	0.05                            
+%mod: [true] do $UPDATE 'SEI inform- +_rate'	0.00                           
+%mod: [true] do $UPDATE 'I inform_0+_rate'  	0.8                       
+%mod: [true] do $UPDATE 'I inform_0-_rate'	0.005
 
-%mod: [true] do $UPDATE 'p+ p0' 0.05                                     
-%mod: [true] do $UPDATE 'p- p0' 0.5
-%mod: [true] do $UPDATE 'p+ p-' 0.005
-%mod: [true] do $UPDATE 'p- p+' 0.001
+%mod: [true] do $UPDATE 'p+ p0_rate' 0.05                                     
+%mod: [true] do $UPDATE 'p- p0_rate' 0.5
+%mod: [true] do $UPDATE 'p+ p-_rate' 0.005
+%mod: [true] do $UPDATE 'p- p+_rate' 0.001

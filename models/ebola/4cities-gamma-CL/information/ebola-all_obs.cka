@@ -1,7 +1,7 @@
 
 %use: 
 %obs: 'Cases' 'E'+'I'+'D'+'R'
-%obs: 'Succeptible' 'S'
+%obs: 'Susceptible' 'S'
 %obs: 'Exposed' 'E'
 %obs: 'Infected' 'I'
 %obs: 'Removed' 'R'

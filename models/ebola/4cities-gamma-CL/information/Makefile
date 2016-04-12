@@ -13,7 +13,7 @@ mod-info:
 	mv *.out base.simdir
 
 make-precompile:
-	time mpirun -n 4 PISKa -i ebola-model-info-gamma_adjust.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -i ebola-info_pert-fast.cka -make-sim precomp.bout
+	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -i ebola-info_pert-fast.cka -make-sim precomp.bout
 
 load-precompile:
 	time mpirun -n 4 PISKa -p 100 -t 500 -sync-t 1 -load-sim precomp.bout -i parameters.cka
