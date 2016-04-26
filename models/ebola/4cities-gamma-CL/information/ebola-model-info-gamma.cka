@@ -4,12 +4,13 @@
 %var: 'dead-transmission' 0.2
 %var: 'case-fatality-proportion' 0.7
 
-## Good!
-%var: 'exposure-stages' 6.0
+## Exposure has a gamma distribution
 %var: 'exposure-time' 11.0
+%var: 'exposure-stages' 6
 %var: 'exposure-rate' 'exposure-stages'/'exposure-time'
 
-## Redo the death and infectious process, following the pattern above!
+## Death and infection have exponential distributions
+### Maybe should change to gamma matching above?
 %var: 'Dead_contagious-time' 4.0
 %var: 'Infected-time' 6.0
 
@@ -29,15 +30,15 @@
 %var: 'infectious_live' 'infected-transmission'/'N' 
 %var: 'infectious_dead' 'dead-transmission'/'N'
 
-#Transmission and information
+# Transmission rates for different information groups
 %var: 'S_0 I_0_rate' 'infectious_live'
-%var: 'S_0 I_+_rate' 'infectious_live'/10
+%var: 'S_0 I_+_rate' 'infectious_live'*0.1
 %var: 'S_0 I_-_rate' 'infectious_live'*1.5
 %var: 'S_- I_0_rate' 'infectious_live'*1.5
-%var: 'S_- I_+_rate' 'infectious_live'/5
+%var: 'S_- I_+_rate' 'infectious_live'*0.2
 %var: 'S_- I_-_rate' 'infectious_live'*2.0
 %var: 'S_+ I_0_rate' 'infectious_live'
-%var: 'S_+ I_+_rate' 'infectious_live'/15
+%var: 'S_+ I_+_rate' 'infectious_live'*0.06
 %var: 'S_+ I_-_rate' 'infectious_live'
 
 %var: 'S_0 D_rate' 'infectious_dead'
@@ -51,21 +52,20 @@
 %var: 'I inform_0+_rate' 0.1
 %var: 'I inform_0-_rate' 0.005
 
-#Information Pear-to-Pear
+#Information Peer-to-Peer
 %var: 'p+ p0_rate' 0.05 
 %var: 'p- p0_rate' 0.05 
 %var: 'p+ p-_rate' 0.005
 %var: 'p- p+_rate' 0.001
 
-
 ##########
 # RULES #
-########
+##########
 # Write down your assumptions clearly and confront whether you like them
 # Better names for these events
 # No _numbers_
 
-#Transmission and information
+# Transmission
 'S_0 I_0' Person(c~S,d,info~zero),Person(c~I,info~zero) -> Person(c~E,info~zero,d!1),Person(c~I,info~zero),Day(i1!1) @* 'S_0 I_0_rate'
 'S_0 I_+' Person(c~S,d,info~zero),Person(c~I,info~pos) -> Person(c~E,info~zero,d!1),Person(c~I,info~pos),Day(i1!1) @* 'S_0 I_+_rate'
 'S_0 I_-' Person(c~S,d,info~zero),Person(c~I,info~neg) -> Person(c~E,info~zero,d!1),Person(c~I,info~neg),Day(i1!1) @* 'S_0 I_-_rate'
@@ -94,20 +94,18 @@
 
 'bury' Dead(d~I) -> Dead(d~R) @ 1/'Dead_contagious-time' 
 
-#Information Gov
+#Information from the government
 'SEI inform+' Person(info~zero) -> Person(info~pos) @ 'SEI inform+_rate'
 'SEI inform-' Person(info~zero) -> Person(info~neg) @ 'SEI inform-_rate'
 'SEI inform- +' Person(info~neg) -> Person(info~pos) @ 'SEI inform- +_rate'
 'I inform_0+' Person(c~I,info~zero) -> Person(c~I,info~pos) @ 'I inform_0+_rate'
 'I inform_0-' Person(c~I,info~zero) -> Person(c~I,info~neg) @ 'I inform_0-_rate'
 
-#Information Pear-to-Pear
+#Information Peer-to-Peer
 'p+ p0' Person(info~pos),Person(info~zero) -> Person(info~pos),Person(info~pos) @ 'p+ p0_rate'
 'p- p0' Person(info~neg),Person(info~zero) -> Person(info~neg),Person(info~neg) @ 'p- p0_rate' 
 'p+ p-' Person(info~pos),Person(info~neg) -> Person(info~pos),Person(info~pos) @ 'p+ p-_rate'
 'p- p+' Person(info~neg),Person(info~pos) -> Person(info~neg),Person(info~neg) @ 'p- p+_rate'
-
-
 
 #Clean
 'remove days' Day(i1) ->  @ [inf]
