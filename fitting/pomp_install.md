@@ -1,5 +1,7 @@
 To install POMP from its source code
 
+`require(devtools)`
+
 `install_github("kingaa/pomp")`
 
 
