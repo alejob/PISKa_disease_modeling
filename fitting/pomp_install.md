@@ -1,8 +1,8 @@
 To install POMP from its source code
 
-`require(devtools)`
-
-`install_github("kingaa/pomp")`
+    install.packages(c('devtools','curl'))
+    require(devtools)
+    install_github("kingaa/pomp")
 
 
 Some possible problems:
