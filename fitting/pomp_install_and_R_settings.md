@@ -23,4 +23,9 @@ symbolic link to one of the path where ld looks for, in my case works
 and similar errors
 `ln -s /usr/lib/lapack/liblapack.so.3.0 /usr/i686-linux-gnu/lib32/liblapack.so`
 
+Setting R 
 
+If is your first time installing R in your computer, it is very probably that you need this package
+
+        install.packages("ggplot2")
+        
