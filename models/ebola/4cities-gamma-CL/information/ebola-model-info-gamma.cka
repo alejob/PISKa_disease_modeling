@@ -42,7 +42,7 @@
 %var: 'S_+ I_-_rate' 'infectious_live'
 
 %var: 'S_0 D_rate' 'infectious_dead'
-%var: 'S_+ D_rate' 'infectious_dead'/10
+%var: 'S_+ D_rate' 'infectious_dead'*0.1
 %var: 'S_- D_rate' 'infectious_dead'*1.5
 
 #Information Gov
