@@ -1,6 +1,9 @@
 args = commandArgs(trailingOnly=TRUE)
 simdir <- list.dirs(path='simdir',recursive=FALSE)
 
+lambdas_vector <- c()
+lambdas_Santiago_vector <- c()
+
 for (num_sim in simdir){
 
     print(num_sim)
@@ -31,5 +34,15 @@ for (num_sim in simdir){
     expoValparaiso <- exp(predict(modelValparaiso))
     print(lambdaValparaiso)
 
+    lambdas_vector <- append(lambdas_vector, lambda)
+    lambdas_Santiago_vector <- append(lambdas_Santiago_vector, lambdaSantiago)	
+
 
 } 
+
+print(lambdas_vector)
+pdf("histogram_all_cities.pdf",7,7)
+hist(lambdas_vector, freq=TRUE, breaks=15, main="Lambdas for many simulations",xlab=expression(lambda), col="orange")
+
+pdf("histogram_Santiago.pdf",7,7)
+hist(lambdas_Santiago_vector, freq=TRUE, breaks=14, main="Lambdas Santiago",xlab=expression(lambda), col="orange")
