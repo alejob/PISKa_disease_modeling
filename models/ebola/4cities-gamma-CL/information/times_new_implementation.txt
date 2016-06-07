@@ -12,3 +12,6 @@ reduction ~20%
 
 100.000 agents the biggest city (127.500 total agents), 100 simulation, 
 t=200, p=50, sync-t=1, with precompiled, 4 proc/cities: 352m = 5h 52m
+
+100.000 agents the biggest city (127.500 total agents), 1000 simulation, 
+t=200, p=50, sync-t=1, with precompiled, 4 proc/cities: 3502m = 58h 22m
