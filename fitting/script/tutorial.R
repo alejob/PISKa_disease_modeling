@@ -115,7 +115,11 @@ dim(a) <- c(1,10,28) #set dimension to tensor of rank-3
 rownames(a)=c("row_name") #gives name to rows
 return (a)}
 
+
+#the statenames and paramnames are necessary only for csnippet
 parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun, statenames="N",paramnames=c("r","K","sigma"))
+
+parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun)
 
 
 

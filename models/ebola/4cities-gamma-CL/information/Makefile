@@ -20,7 +20,7 @@ load-precompile:
 	mv *.out base.simdir
 
 load-precompile-10:
-	for i in `seq 1 100`; do\
+	for i in `seq 1 1000`; do\
 		rm -r simdir/$$i;\
 		time mpirun -n 4 PISKa -p 50 -t 200 -sync-t 1 -load-sim precomp.bout -i parameters.cka;\
 		mkdir simdir/$$i;\
@@ -34,7 +34,7 @@ test:
 		#touch hola;\
 		#mkdir $$i.kaka;\
 		#mv hola $$i.kaka;\
-	done
+	done 
 
 
 base.simdir: base.model.cka base.city.cka base.obs.cka
