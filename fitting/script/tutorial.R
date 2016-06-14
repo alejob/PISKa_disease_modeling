@@ -9,33 +9,107 @@ library(Matrix)
 #pomp read "years" of the data
 parus.dat <- read.csv(text="
                       year,P
-                      1960,148
-                      1961,258
-                      1962,185
-                      1963,170
-                      1964,267
-                      1965,239
-                      1966,196
-                      1967,132
-                      1968,167
-                      1969,186
-                      1970,128
-                      1971,227
-                      1972,174
-                      1973,177
-                      1974,137
-                      1975,172
-                      1976,119
-                      1977,226
-                      1978,166
-                      1979,161
-                      1980,199
-                      1981,306
-                      1982,206
-                      1983,350
-                      1984,214
-                      1985,175
-                      1986,211"
+                      1960,	148
+1961,	258
+1962,	185
+1963,	170
+1964,	267
+1965,	239
+1966,	196
+1967,	132
+1968,	167
+1969,	186
+1970,	128
+1971,	227
+1972,	174
+1973,	177
+1974,	137
+1975,	172
+1976,	119
+1977,	226
+1978,	166
+1979,	161
+1980,	199
+1981,	306
+1982,	206
+1983,	350
+1984,	214
+1985,	175
+1986,	211
+1987,	212
+1988,	213
+1989,	214
+1990,	215
+1991,	216
+1992,	217
+1993,	218
+1994,	219
+1995,	220
+1996,	221
+1997,	222
+1998,	223
+1999,	224
+2000,	225
+2001,	226
+2002,	227
+2003,	228
+2004,	229
+2005,	230
+2006,	231
+2007,	232
+2008,	233
+2009,	234
+2010,	235
+2011,	236
+2012,	237
+2013,	238
+2014,	239
+2015,	240
+2016,	241
+2017,	242
+2018,	243
+2019,	244
+2020,	245
+2021,	246
+2022,	247
+2023,	248
+2024,	249
+2025,	250
+2026,	251
+2027,	252
+2028,	253
+2029,	254
+2030,	255
+2031,	256
+2032,	257
+2033,	258
+2034,	259
+2035,	260
+2036,	261
+2037,	262
+2038,	263
+2039,	264
+2040,	265
+2041,	266
+2042,	267
+2043,	268
+2044,	269
+2045,	270
+2046,	271
+2047,	272
+2048,	273
+2049,	274
+2050,	275
+2051,	276
+2052,	277
+2053,	278
+2054,	279
+2055,	280
+2056,	281
+2057,	282
+2058,	283
+2059,	284
+"
                       )
 
 parus.dat <- read.csv(text="
@@ -121,8 +195,31 @@ parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun, statenames=
 
 parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun)
 
-
-
+simStates <- simulate(parus,nsim=10,params=c(r=0.2,K=200,sigma=0.5,N.0=200),states=TRUE)
 
 z<-seq(1,280)
 dim(z)<-c(1,10,28)
+
+#Creating function to run and call results inside R
+
+test.fun <- function(xstart,times,params,...){
+system("make")
+ Santiago<<-read.table("Santiago.out", col.names=c("time", "cases", "susceptible", "exposed", "infected",
+ "removed", "dead"))[c("infected")]
+ nrow_stgo <- nrow(Santiago)
+ #now I eliminate the dimension of the array
+ Santiago <<- unlist(Santiago)
+ #now I set the required dimension by rprocess
+ dim(Santiago) <<- c(1,1,nrow_stgo)
+ rownames(Santiago) <<-c("row_name") #gives name to rows
+ return(Santiago)
+ }
+
+#testing output
+test.fun <- function (x, t, params, delta.t, ... ) {
+  dW <- rnorm(n = 1, mean = 0, sd = sqrt(delta.t))
+  print(x["N"])
+  N <- x["N"] + params["r"] * x["N"] * (1 - x["N"]/params["K"]) * delta.t + params["sigma"] * dW
+  c(N=unname(N))
+}
+

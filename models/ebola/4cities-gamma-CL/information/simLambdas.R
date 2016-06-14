@@ -16,6 +16,8 @@ for (num_sim in simdir){
     La_Serena <-read.table(paste(num_sim,"/La_Serena.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
 
     cities <- Santiago + Valparaiso + Rancagua + La_Serena
+    #the /4 depend on the time given in the simulation
+    cities <- transform(cities, time = time/4)
     write.table(cities,paste(num_sim,"/totalCities.out", sep=""))
 
     #Finding lambda
