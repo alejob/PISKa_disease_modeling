@@ -6,6 +6,7 @@ Rancagua <-read.table(paste(args[1],"/Rancagua.out", sep=""), col.names=c("time"
 La_Serena <-read.table(paste(args[1],"/La_Serena.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
 
 cities <- Santiago + Valparaiso + Rancagua + La_Serena
+cities <- transform(cities, time = time/4)
 write.table(cities,paste(args[1],"/totalCities.out", sep=""))
 
 #Finding lambda
