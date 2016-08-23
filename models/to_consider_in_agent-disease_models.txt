@@ -1,3 +1,3 @@
 If you create a simulation based on agent-rules to simulate a spread disease, be sure to:
 
-- Have enough number of agents (min ~100000, altought its depend on the model), or it is possible that the exponential curves become a sigmoid curve.
+- Have enough number of agents (min ~100000, although it depend on the model), or it is possible that the exponential curves become a sigmoid curve.

@@ -194,8 +194,12 @@ return (a)}
 parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun, statenames="N",paramnames=c("r","K","sigma"))
 
 parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun)
+parus <- pomp(data=parus.dat,time="year",t0=1959, rprocess=test.fun, dmeasure=test.dmeasure)
 
 simStates <- simulate(parus,nsim=10,params=c(r=0.2,K=200,sigma=0.5,N.0=200),states=TRUE)
+simStates <- simulate(parus,nsim=1,params=c(r=0.2,K=200,sigma=0.5,N.0=200),states=TRUE)
+
+pfilter(parus, Np=1000, params=c(r=0.2,K=200,sigma=0.5,N.0=200), max.fail=10, verbose=TRUE)
 
 z<-seq(1,280)
 dim(z)<-c(1,10,28)
@@ -206,14 +210,71 @@ test.fun <- function(xstart,times,params,...){
 system("make")
  Santiago<<-read.table("Santiago.out", col.names=c("time", "cases", "susceptible", "exposed", "infected",
  "removed", "dead"))[c("infected")]
- nrow_stgo <- nrow(Santiago)
+  #nrow_stgo <- nrow(Santiago)
+  #like BB
+  nrep <- ncol(xstart)
+  #nvars <- nrow(xstart)
+  nrow_stgo <- nrow(xstart)
+  ntimes <- length(times)
  #now I eliminate the dimension of the array
  Santiago <<- unlist(Santiago)
+ #Santiago should be a numeric class
+ print("clase Santiago es:")
+ print(class(Santiago)) 
+ Santiago <<- as.numeric(Santiago)
  #now I set the required dimension by rprocess
- dim(Santiago) <<- c(1,1,nrow_stgo)
+ #dim(Santiago) <<- c(1,1,nrow_stgo)
+ #BB ways
+  dim(Santiago) <<- c(nrow_stgo, nrep, ntimes)
+
  rownames(Santiago) <<-c("row_name") #gives name to rows
  return(Santiago)
  }
+######BB's way##########
+test.fun <- function(xstart,times,params,...) {
+    nrep <- ncol(xstart)
+    nvars <- nrow(xstart)
+    ntimes <- length(times)
+    print(xstart)    
+    print(nrep)    
+    print(nvars)
+    print(ntimes)    
+    res <- array(NA,dim=c(nvars,nrep,ntimes),
+                 dimnames=list(X=rownames(xstart),
+                 rep=1:nrep,time=times))
+    res[,,1] <- xstart    
+    ## in pomp, xstart, params are provided as _matrices_.
+    ## if we want to use with() magic we need to transpose
+    ## them and then turn them into data frames ...
+    ff <- function(x) as.data.frame(t(x))
+    system("make")
+    Santiago<-read.table("Santiago.out", col.names=c("time", "cases", "susceptible", "exposed", "infected",    
+ "removed", "dead"))[c("infected")]
+    Santiago <- unlist(Santiago)	    
+    print(Santiago)
+    Santiago[3]
+    for (i in 2:ntimes) {
+    	#aux <- array(NA, dim=c())
+    	#for (i in nrep) 
+	    #rbind(Santiago[i] + rbinom(1, prob=0.23, size=10),Santiago[i] + rbinom(1, prob=0.23, size=10))
+
+            res[,,i] <- rbind(Santiago[i] + rbinom(1, prob=0.23, size=10),Santiago[i] + rbinom(1, prob=0.23, size=10))
+	    incid <- res[,,i]	     
+                      
+    }
+  return(res)
+}
+
+test.dmeasure<- function(y,x,t,params,log=FALSE,...)  {
+    d <- with(as.list(c(x,params)),
+              #dbinom(y,incid,prob=pC,log=log)
+	      dbinom(y,20,prob=0.8,log=log)
+              )
+    ## if (any(is.na(d))) browser()
+    return(d)
+}
+
+
 
 #testing output
 test.fun <- function (x, t, params, delta.t, ... ) {
@@ -222,4 +283,3 @@ test.fun <- function (x, t, params, delta.t, ... ) {
   N <- x["N"] + params["r"] * x["N"] * (1 - x["N"]/params["K"]) * delta.t + params["sigma"] * dW
   c(N=unname(N))
 }
-

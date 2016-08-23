@@ -35,10 +35,10 @@
 #################
 # Transmission rates for different information groups
 %var: 'S_0 I_0_rate' 'infectious_live'
-%var: 'S_0 I_+_rate' 'infectious_live'*0.1
+%var: 'S_0 I_+_rate' 'infectious_live' #0.1
 %var: 'S_0 I_-_rate' 'infectious_live'*1.5
 %var: 'S_- I_0_rate' 'infectious_live'*1.5
-%var: 'S_- I_+_rate' 'infectious_live'*0.2
+%var: 'S_- I_+_rate' 'infectious_live' #0.2
 %var: 'S_- I_-_rate' 'infectious_live'*2.0
 %var: 'S_+ I_0_rate' 'infectious_live'
 %var: 'S_+ I_+_rate' 'infectious_live'*0.06
@@ -49,8 +49,8 @@
 %var: 'S_- D_rate' 'infectious_dead'*1.5
 
 #Information Gov
-%var: 'SEI inform+_rate' 0.0
-%var: 'SEI inform-_rate' 0.05
+%var: 'SEI inform+_rate' 0.01 #0
+%var: 'SEI inform-_rate' 0.00 #0.05 this variable change a lot the simulation
 %var: 'SEI inform- +_rate' 0.00
 
 #Information to infected people
@@ -104,10 +104,10 @@
 'I inform_0-' Person(c~I,info~zero) -> Person(c~I,info~neg) @ 'I inform_0-_rate'
 
 #Information Peer-to-Peer
-'p+ p0' Person(info~pos),Person(info~zero) -> Person(info~pos),Person(info~pos) @ 'p+ p0_rate'
-'p- p0' Person(info~neg),Person(info~zero) -> Person(info~neg),Person(info~neg) @ 'p- p0_rate' 
-'p+ p-' Person(info~pos),Person(info~neg) -> Person(info~pos),Person(info~pos) @ 'p+ p-_rate'
-'p- p+' Person(info~neg),Person(info~pos) -> Person(info~neg),Person(info~neg) @ 'p- p+_rate'
+#'p+ p0' Person(info~pos),Person(info~zero) -> Person(info~pos),Person(info~pos) @ 'p+ p0_rate'
+#'p- p0' Person(info~neg),Person(info~zero) -> Person(info~neg),Person(info~neg) @ 'p- p0_rate' 
+#'p+ p-' Person(info~pos),Person(info~neg) -> Person(info~pos),Person(info~pos) @ 'p+ p-_rate'
+#'p- p+' Person(info~neg),Person(info~pos) -> Person(info~neg),Person(info~neg) @ 'p- p+_rate'
 
 #########
 # Time #

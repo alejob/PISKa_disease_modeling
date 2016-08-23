@@ -1,19 +1,21 @@
-#%mod: [true] do $UPDATE 'infected-transmission' 1
-#%mod: [true] do $UPDATE 'dead-transmission' 1
-#%mod: [true] do $UPDATE 'case_fatality-proportion' 1
-#%mod: [true] do $UPDATE 'exposure-stages' 1
-#%mod: [true] do $UPDATE 'exposure-time' 1
-#%mod: [true] do $UPDATE 'Dead_contagious-time' 1
-#%mod: [true] do $UPDATE 'Infected-time' 1
+#%mod: [true] do $UPDATE 'infected-transmission' 0.25 #estaban todos seteados en 1
+#%mod: [true] do $UPDATE 'dead-transmission' 0.2
+#%mod: [true] do $UPDATE 'case_fatality-proportion' 0.7
+#%mod: [true] do $UPDATE 'exposure-stages' 6.0
+#%mod: [true] do $UPDATE 'exposure-time' 11.0
+#%mod: [true] do $UPDATE 'Dead_contagious-time' 4.0
+#%mod: [true] do $UPDATE 'Infected-time' 6.0 #hasta aca estaban seteados en 1
 
-#information
-%mod: [true] do $UPDATE 'SEI inform+_rate'	0.0                           
-%mod: [true] do $UPDATE 'SEI inform-_rate'	0.05                            
-%mod: [true] do $UPDATE 'SEI inform- +_rate'	0.00                           
-%mod: [true] do $UPDATE 'I inform_0+_rate'  	0.8                       
+#information Gov
+%mod: [true] do $UPDATE 'SEI inform+_rate'	0.01                           
+%mod: [true] do $UPDATE 'SEI inform-_rate'	0.0                            
+%mod: [true] do $UPDATE 'SEI inform- +_rate'	0.0
+
+#information to infected people           
+%mod: [true] do $UPDATE 'I inform_0+_rate'  	0.1                       
 %mod: [true] do $UPDATE 'I inform_0-_rate'	0.005
 
 %mod: [true] do $UPDATE 'p+ p0_rate' 0.05                                     
-%mod: [true] do $UPDATE 'p- p0_rate' 0.5
+%mod: [true] do $UPDATE 'p- p0_rate' 0.05
 %mod: [true] do $UPDATE 'p+ p-_rate' 0.005
 %mod: [true] do $UPDATE 'p- p+_rate' 0.001
