@@ -5,10 +5,10 @@ stop("You must use one argument, the directory where your data is.")
 }
 
 
-Santiago<-read.table(paste(args[1],"/Santiago.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
-Valparaiso <-read.table(paste(args[1],"/Valparaiso.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
-Rancagua <-read.table(paste(args[1],"/Rancagua.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
-La_Serena <-read.table(paste(args[1],"/La_Serena.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead"))
+Santiago<-read.table(paste(args[1],"/Santiago.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead","pos","zero","neg","info_sum"))
+Valparaiso <-read.table(paste(args[1],"/Valparaiso.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead","pos","zero","neg","info_sum"))
+Rancagua <-read.table(paste(args[1],"/Rancagua.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead","pos","zero","neg","info_sum"))
+La_Serena <-read.table(paste(args[1],"/La_Serena.out", sep=""), col.names=c("time", "cases", "susceptible", "exposed", "infected", "removed", "dead","pos","zero","neg","info_sum"))
 
 cities <- Santiago + Valparaiso + Rancagua + La_Serena
 cities <- transform(cities, time = time/4)
@@ -20,6 +20,8 @@ lambda <- model$coefficients[2]
 expo <- exp(predict(model))
 
 #Finding lambda by cities
+#lm(y_data ~ x_data)
+
 modelSantiago <- lm( log(replace(Santiago$infected[2:40], Santiago$infected[2:40]==0, 1)) ~ Santiago$time[2:40])
 lambdaSantiago <- modelSantiago$coefficients[2]
 expoSantiago <- exp(predict(modelSantiago))
@@ -52,8 +54,12 @@ points(cities $time, cities $exposed, ann=F,col="blue")
 points(cities $time, cities $infected, ann=F, col="black")
 points(cities $time, cities $removed, ann=F, col="purple")
 points(cities $time, cities $dead, ann=F, col="orange")
+points(cities $time, cities $pos, ann=F, col="cornflowerblue")
+points(cities $time, cities $zero, ann=F, col="chocolate3")
+points(cities $time, cities $neg, ann=F, col="cornsilk4")
+points(cities $time, cities $info_sum, ann=F, col="darkcyan")
 
-legend("topleft", inset=.05, title="State all cities",c("E+I+R+D","susceptible","exposed","infected","removed","dead"), fill=c("red","green","blue","black","purple","orange"), horiz=FALSE)
+legend("topleft", inset=.05, title="State all cities",c("E+I+R+D","susceptible","exposed","infected","removed","dead","pos","zero","neg","info-sum"), fill=c("red","green","blue","black","purple","orange","cornflowerblue","chocolate3","cornsilk4","darkcyan"), horiz=FALSE)
 
 title(main="States", sub="time", ylab="cases")
 
@@ -63,6 +69,7 @@ pdf("infected_all_cities.pdf",7,7)
 plot(cities $time, cities $infected, ann=F,col="black")
 lines(cities $time[2:40], expo)
 legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
+options(scipen = 1 )
 title(main="Infected", sub="time [days]", ylab="infected")
 
 dev.off()

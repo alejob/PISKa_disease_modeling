@@ -7,7 +7,7 @@ stop("You must use one argument, the directory where your data is.")
 
 simdir <- list.dirs(path=simdir_to_list,recursive=FALSE)
 
-
+library(sfsmisc)
 
 lambdas_vector <- c()
 lambdas_Santiago_vector <- c()
@@ -54,9 +54,12 @@ for (num_sim in simdir){
     #write.table(cities,paste(num_sim,"/totalCities.out", sep=""))
 
     #Finding lambda
+    #lm: fit linear models
+    # x ~ y
     model <- lm( log( replace(cities$infected[2:40], cities$infected[2:40]==0,1)) ~ cities$time[2:40])
     lambda <- model$coefficients[2]
     expo <- expo + exp(predict(model))
+    #print(model$coefficients)
     #print(lambda)
     #print(expo)
 
@@ -111,10 +114,14 @@ lambdaLa_Serena <- sum(lambdas_La_Serena_vector)/length(simdir)
 
 ### PLOT INFECTED VS TIME AND EXPONENTIAL ADJUST ###
 pdf("adjust_all_cities.pdf",7,7)
+options(scipen=2)
 plot(cities_sum $time, cities_sum $infected, ann=F,col="black")
 lines(cities_sum $time[2:40], expo)
-legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
-title(main="Infected", sub="time [days]", ylab="infected")
+#legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
+legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression(lambda))
+#title(main="Infected", sub="time [days]",ylab="infected",cex.lab=1.5)
+title(main="Infected", xlab= "time [days]",ylab="infected",cex.lab=1.5, cex.axis=2.0)
+
 
 dev.off()
 
@@ -144,25 +151,39 @@ title(main="Rancagua", sub="time [days]", ylab="infected")
 par(old.par)
 
 
-### PLOT HISTOGRAMS ###
-print(lambdas_vector)
+### PLOT HISTOGRAMS OF GROWTH###
+#print(lambdas_vector)
 pdf("histogram_all_cities.pdf",7,7)
-hist(lambdas_vector[lambdas_vector>0.0], freq=TRUE, breaks=15, main="Grow rates for all cities",xlab=expression("r"[0]), col="orange")#, xlim=c(0.013,0.017))
+hist(lambdas_vector[lambdas_vector>0.0], freq=TRUE, breaks=15, main="4 cities",xlab=expression(lambda), col="orange", cex.lab=1.5, cex.axis=2.0)
+
+#, xlim=c(0.013,0.017))
 dev.off()
 
 
 pdf("each_city.pdf",7,7)
 old.par <-par(mfrow=c(2,2))
 #pdf("histogram_Santiago.pdf",7,7)
-hist(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], freq=TRUE, breaks=14, main="Grow rates Santiago",xlab=expression("r"[0]), col="orange")
+hist(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], freq=TRUE, breaks=14, main="Santiago",xlab=expression("r"[0]), col="orange", cex.lab=1.5, ylim=c(0,280), cex.axis=2.0)
+#hist(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], freq=TRUE, breaks=14, main="Santiago",xlab=expression(lambda), col="orange", cex.lab=1.5, ylim=c(0,280), cex.axis=2.0)
 
 #pdf("histogram_Valparaiso.pdf",7,7)
-hist(lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], freq=TRUE, breaks=14, main="Grow rates Valparaiso",xlab=expression("r"[0]), col="orange")
+hist(lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], freq=TRUE, breaks=14, main="Valparaiso",xlab=expression("r"[0]), col="orange", cex.lab=1.5, ylim=c(0,280), cex.axis=2.0)
 
 #pdf("histogram_La_Serena.pdf",7,7)
-hist(lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], freq=TRUE, breaks=14, main="Grow rates La_Serena",xlab=expression("r"[0]), col="orange")
+hist(lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], freq=TRUE, breaks=14, main="La_Serena",xlab=expression("r"[0]), col="orange", cex.lab=1.5, ylim=c(0,280), cex.axis=2.0)
 
 #pdf("histogram_Rancagua.pdf",7,7)
-hist(lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], freq=TRUE, breaks=14, main="Grow rates Rancagua",xlab=expression("r"[0]), col="orange")
+hist(lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], freq=TRUE, breaks=14, main="Rancagua",xlab=expression("r"[0]), col="orange", cex.lab=1.5, ylim=c(0,280), cex.axis=2.0)
 
 par(old.par)
+
+#BOXPLOT
+pdf("boxplot.pdf", 7, 7)
+#data_all = c(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0] )
+#print(data_all)
+
+boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]))
+
+pdf("boxplot_all.pdf", 7, 7)
+boxplot(lambdas_vector[lambdas_vector>0.0], main="Growth rates", names=c("All"), ylab=expression("r"[0]))
+

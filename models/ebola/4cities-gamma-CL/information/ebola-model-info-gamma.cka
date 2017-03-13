@@ -15,20 +15,26 @@
 %var: 'Infected-time' 6.0
 
 #Agents
-%agent: Person(c~S~E~I, info~zero~neg~pos,d)
+#%agent: Person(c~S~E~I, info~zero~neg~pos,d)
+%agent: Person(c~S~E~I~R, info~zero~neg~pos,d)
 %agent: Dead(d~I~R)
-%agent: Removed()
+#%agent: Removed()
 %agent: Day(i1,i2)
 
 #Vars
 %var: 'S' Person(c~S)
 %var: 'E' Person(c~E)
 %var: 'I' Person(c~I)
-%var: 'R' Removed()
+%var: 'R' Person(c~R)
+#%var: 'R' Removed()
 %var: 'D' Dead()
 %var: 'N' 'S'+'E'+'I'+'R'
 %var: 'infectious_live' 'infected-transmission'/'N' 
 %var: 'infectious_dead' 'dead-transmission'/'N'
+%var: 'Info-pos' Person(info~pos)
+%var: 'Info-zero' Person(info~zero)
+%var: 'Info-neg' Person(info~neg)
+
 
 ##################
 # RATES INFECTION#
@@ -49,7 +55,7 @@
 %var: 'S_- D_rate' 'infectious_dead'*1.5
 
 #Information Gov
-%var: 'SEI inform+_rate' 0.01 #0
+%var: 'SEI inform+_rate' 0.00 #0
 %var: 'SEI inform-_rate' 0.00 #0.05 this variable change a lot the simulation
 %var: 'SEI inform- +_rate' 0.00
 
@@ -116,7 +122,11 @@
 'infect' Person(c~E,d!0),Day(i1!0,i2!1),Day(i1!1,i2!2),Day(i1!2,i2!3),Day(i1!3,i2!4),Day(i1!4,i2!5),Day(i1!5,i2!6),Day(i1!6,i2) ->\
 			Person(c~I,d) @ [inf]
 'Die' Person(c~I) -> Dead(d~I) @ 'case-fatality-proportion'/'Infected-time'
-'live' Person(c~I) -> Removed() @ (1-'case-fatality-proportion')/'Infected-time'
+#Should consider a removed person with information, because they still have
+#positive or negative information after they recover
+#'live' Person(c~I) -> Removed() @ (1-'case-fatality-proportion')/'Infected-time'
+'live' Person(c~I) -> Person(c~R) @ (1-'case-fatality-proportion')/'Infected-time'
+
 'bury' Dead(d~I) -> Dead(d~R) @ 1/'Dead_contagious-time' 
 
 #Clean

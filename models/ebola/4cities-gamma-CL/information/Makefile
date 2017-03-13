@@ -8,6 +8,9 @@ endef
 time:
 	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 100 -t 400 -sync-t 1
 	mv *.out base.simdir
+adjust:
+	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 125 -t 500 -sync-t 1
+	mv *.out base.simdir
 
 mod-info:
 	time mpirun -n 4 PISKa -i ebola-model-info-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -i ebola-info_pert-fast.cka -p 100 -t 500 -sync-t 1
@@ -20,12 +23,16 @@ load-precompile:
 	time mpirun -n 4 PISKa -p 100 -t 500 -sync-t 1 -load-sim precomp.bout -i parameters.cka
 	mv *.out base.simdir
 
-load-precompile-10:
-	for i in `seq 1 1000`; do\
+load-precompile-adjust:
+	time mpirun -n 4 PISKa -p 125 -t 500 -sync-t 1 -load-sim precomp.bout -i parameters_test.cka  -seed 3
+	mv *.out base.simdir
+
+load-precompile-100:
+	for i in `seq 1 100`; do\
 		rm -r simdir/$$i;\
-		time mpirun -n 4 PISKa -p 50 -t 200 -sync-t 1 -load-sim precomp.bout -i parameters.cka;\
-		mkdir simdir/$$i;\
-		mv *.out simdir/$$i;\
+		time mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters.cka;\
+		mkdir simdir_adjust/$$i;\
+		mv *.out simdir_adjust/$$i;\
 	done
 
 load-precompile-1000:
