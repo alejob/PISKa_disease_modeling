@@ -114,14 +114,21 @@ lambdaLa_Serena <- sum(lambdas_La_Serena_vector)/length(simdir)
 
 ### PLOT INFECTED VS TIME AND EXPONENTIAL ADJUST ###
 pdf("adjust_all_cities.pdf",7,7)
-options(scipen=2)
-plot(cities_sum $time, cities_sum $infected, ann=F,col="black")
+library(sfsmisc)
+options(scipen=-3) #to set scientific notation
+par(mar=c(5,6,4,2)+0.1) #to set more margin
+plot(cities_sum $time, cities_sum $infected, ann=F,col="black", yaxt="n")
 lines(cities_sum $time[2:40], expo)
-#legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
-legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression(lambda))
-#title(main="Infected", sub="time [days]",ylab="infected",cex.lab=1.5)
-title(main="Infected", xlab= "time [days]",ylab="infected",cex.lab=1.5, cex.axis=2.0)
 
+legend("topleft", inset=.05, legend=pretty10exp(round(lambda, digits=4)), title=expression("r"[0]))
+#legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression(lambda))
+
+#title(main="Infected", sub="time [days]",ylab="infected",cex.lab=1.5)
+title(main="Infected", xlab= "time [days]",ylab="",cex.lab=1.5, cex.axis=2.0)
+mtext("infected",side=2,line=5,cex = 1.5) #to set the label in the margin
+
+eaxis(1)  # x-axis
+eaxis(2,drop.1 = FALSE,las = 1 ) # (eje, colocar x1, orientacion)
 
 dev.off()
 
@@ -154,7 +161,8 @@ par(old.par)
 ### PLOT HISTOGRAMS OF GROWTH###
 #print(lambdas_vector)
 pdf("histogram_all_cities.pdf",7,7)
-hist(lambdas_vector[lambdas_vector>0.0], freq=TRUE, breaks=15, main="4 cities",xlab=expression(lambda), col="orange", cex.lab=1.5, cex.axis=2.0)
+#hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="4 cities",xlab=expression(lambda), col="orange", cex.lab=1.5, cex.axis=2.0)
+hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="",xlab=expression("r"[0]), col="orange", cex.lab=1.5, cex.axis=2.0)
 
 #, xlim=c(0.013,0.017))
 dev.off()
@@ -182,8 +190,35 @@ pdf("boxplot.pdf", 7, 7)
 #data_all = c(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0] )
 #print(data_all)
 
-boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]))
+#this is use to set the limit of the y axis
+#boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]), ylim=c(0,0.065), cex.lab=1.5, cex.axis=1.3)
+
+boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]), xlab="Cities", cex.lab=1.5, cex.axis=1.3)
 
 pdf("boxplot_all.pdf", 7, 7)
 boxplot(lambdas_vector[lambdas_vector>0.0], main="Growth rates", names=c("All"), ylab=expression("r"[0]))
 
+#STATE PLOTS
+pdf("SEIRD_all_cities-all_simulations.pdf",7,7)
+
+#library(sfsmisc)
+options(scipen=-2)
+par(mar=c(5,6,4,2)+0.1)
+
+#plot(cities_sum $time, cities_sum $dead, ann=F, col="orange", ylim=c(1,127000), yaxt="n",log="y") #original
+#plot(cities_sum $time, cities_sum $dead, ann=F, col="orange", yaxt="n",log="y")
+plot(cities_sum $time, cities_sum $dead, ann=F, col="orange", yaxt="n")
+points(cities_sum $time, cities_sum $susceptible, ann=F, col="red")
+points(cities_sum $time, cities_sum $exposed, ann=F,col="blue")
+points(cities_sum $time, cities_sum $infected, ann=F, col="black")
+points(cities_sum $time, cities_sum $removed, ann=F, col="purple")
+
+eaxis(1)  # x-axis
+eaxis(2,drop.1 = FALSE,las = 1 ) # (eje, colocar 1x, orientacion)
+
+legend("topleft", inset=.05, title="State all cities",c("susceptible","exposed","infected","removed","dead"), fill=c("red","blue","black","purple","orange"), horiz=FALSE, )
+title(main="States", xlab="time[days]", ylab="",cex.lab = 1.5, cex.axis=2.0)
+mtext("log(cases)",side=2,line=5, cex=1.5)
+
+
+dev.off()

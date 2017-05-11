@@ -54,26 +54,26 @@ for (num_sim in simdir){
     #write.table(cities,paste(num_sim,"/totalCities.out", sep=""))
 
     #Finding lambda
-    model <- lm( log( replace(cities$infected[5:28], cities$infected[5:28]==0,1)) ~ cities$time[5:28])
+    model <- lm( log( replace(cities$infected[2:40], cities$infected[2:40]==0,1)) ~ cities$time[2:40])
     lambda <- model$coefficients[2]
     expo <- expo + exp(predict(model))
     #print(lambda)
     #print(expo)
 
     #Finding lambda by cities
-    modelSantiago <- lm( log(replace(Santiago$infected[5:28], Santiago$infected[5:28]==0, 1)) ~ Santiago$time[5:28])
+    modelSantiago <- lm( log(replace(Santiago$infected[2:40], Santiago$infected[2:40]==0, 1)) ~ Santiago$time[2:40])
     lambdaSantiago <- modelSantiago$coefficients[2]
     expoSantiago <- expoSantiago + exp(predict(modelSantiago))
     
-    modelValparaiso <- lm( log( replace(Valparaiso$infected[5:28], Valparaiso$infected[5:28]==0, 1)) ~ Valparaiso$time[5:28])
+    modelValparaiso <- lm( log( replace(Valparaiso$infected[2:40], Valparaiso$infected[2:40]==0, 1)) ~ Valparaiso$time[2:40])
     lambdaValparaiso <- modelValparaiso$coefficients[2]
     expoValparaiso <- expoValparaiso + exp(predict(modelValparaiso))
     
-    modelRancagua <- lm( log( replace(Rancagua$infected[5:28], Rancagua$infected[5:28]==0, 1)) ~ Rancagua$time[5:28])
+    modelRancagua <- lm( log( replace(Rancagua$infected[2:40], Rancagua$infected[2:40]==0, 1)) ~ Rancagua$time[2:40])
     lambdaRancagua <- modelRancagua$coefficients[2]
     expoRancagua <- expoRancagua + exp(predict(modelRancagua))
 
-    modelLa_Serena <- lm( log( replace(La_Serena$infected[5:28], La_Serena$infected[5:28]==0, 1)) ~ La_Serena$time[5:28])
+    modelLa_Serena <- lm( log( replace(La_Serena$infected[2:40], La_Serena$infected[2:40]==0, 1)) ~ La_Serena$time[2:40])
     lambdaLa_Serena <- modelLa_Serena$coefficients[2]
     expoLa_Serena <- expoLa_Serena + exp(predict(modelLa_Serena))
 
@@ -112,7 +112,7 @@ lambdaLa_Serena <- sum(lambdas_La_Serena_vector)/length(simdir)
 ### PLOT INFECTED VS TIME AND EXPONENTIAL ADJUST ###
 pdf("adjust_all_cities.pdf",7,7)
 plot(cities_sum $time, cities_sum $infected, ann=F,col="black")
-lines(cities_sum $time[5:28], expo)
+lines(cities_sum $time[2:40], expo)
 legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
 title(main="Infected", sub="time [days]", ylab="infected")
 
@@ -122,22 +122,22 @@ pdf("each_city_infected_all.pdf",7,7)
 old.par <-par(mfrow=c(2,2))
 
 plot(Santiago_sum $time, Santiago_sum $infected, ann=F,col="black", main="Santiago")
-lines(Santiago_sum $time[5:28], expoSantiago)
+lines(Santiago_sum $time[2:40], expoSantiago)
 legend("topleft", inset=.05, legend=round(lambdaSantiago, digits=4), title=expression("r"[0]))
 title(main="Santiago", sub="time [days]", ylab="infected")
 
 plot(Valparaiso_sum $time, Valparaiso_sum $infected, ann=F,col="black", main="Valparaiso")
-lines(Valparaiso_sum $time[5:28], expoValparaiso)
+lines(Valparaiso_sum $time[2:40], expoValparaiso)
 legend("topleft", inset=.05, legend=round(lambdaValparaiso, digits=4), title=expression("r"[0]))
 title(main="Valparaiso", sub="time [days]", ylab="infected")
 
 plot(La_Serena_sum $time, La_Serena_sum $infected, ann=F,col="black")
-lines(La_Serena_sum $time[5:28], expoLa_Serena)
+lines(La_Serena_sum $time[2:40], expoLa_Serena)
 legend("topleft", inset=.05, legend=round(lambdaLa_Serena, digits=4), title=expression("r"[0]))
 title(main="La_Serena", sub="time [days]", ylab="infected")
 
 plot(Rancagua_sum $time, Rancagua_sum $infected, ann=F,col="black")
-lines(Rancagua_sum $time[5:28], expoRancagua)
+lines(Rancagua_sum $time[2:40], expoRancagua)
 legend("topleft", inset=.05, legend=round(lambdaRancagua, digits=4), title=expression("r"[0]))
 title(main="Rancagua", sub="time [days]", ylab="infected")
 
