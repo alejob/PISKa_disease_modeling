@@ -24,7 +24,7 @@
 %agent: Day(i1,i2)
 
 
-#Transmision
+#Transmission
 'w/Infected' Person(c~S,d),Person(c~I) -> Person(c~E,d!1),Person(c~I),Day(i1!1) @* 'infected-transmission'/'N'
 'w/Dead' Person(c~S,d),Dead(d~I) -> Person(c~E,d!1),Dead(d~I),Day(i1!1) @* 'dead-transmission'/'N'
 

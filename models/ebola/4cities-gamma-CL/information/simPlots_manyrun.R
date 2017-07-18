@@ -114,9 +114,9 @@ lambdaLa_Serena <- sum(lambdas_La_Serena_vector)/length(simdir)
 
 ### PLOT INFECTED VS TIME AND EXPONENTIAL ADJUST ###
 pdf("adjust_all_cities.pdf",7,7)
-library(sfsmisc)
-options(scipen=-3) #to set scientific notation
-par(mar=c(5,6,4,2)+0.1) #to set more margin
+#library(sfsmisc) ##############ESTAS LINEAS DEFINEN LA NOTACION CIENTIFICA DE AQUI HACIA ABAJO#######################
+#options(scipen=-3) #to set scientific notation
+#par(mar=c(5,6,4,2)+0.1) #to set more margin
 plot(cities_sum $time, cities_sum $infected, ann=F,col="black", yaxt="n")
 lines(cities_sum $time[2:40], expo)
 
@@ -161,8 +161,8 @@ par(old.par)
 ### PLOT HISTOGRAMS OF GROWTH###
 #print(lambdas_vector)
 pdf("histogram_all_cities.pdf",7,7)
-#hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="4 cities",xlab=expression(lambda), col="orange", cex.lab=1.5, cex.axis=2.0)
-hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="",xlab=expression("r"[0]), col="orange", cex.lab=1.5, cex.axis=2.0)
+hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="4 cities",xlab=expression(lambda), col="orange", cex.lab=1.5, cex.axis=2.0)
+#hist(lambdas_vector[lambdas_vector>0.0], ylim=c(0,250),freq=TRUE, breaks=15, main="",xlab=expression("r"[0]), col="orange", cex.lab=1.5, cex.axis=2.0)
 
 #, xlim=c(0.013,0.017))
 dev.off()
@@ -191,9 +191,9 @@ pdf("boxplot.pdf", 7, 7)
 #print(data_all)
 
 #this is use to set the limit of the y axis
-#boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]), ylim=c(0,0.065), cex.lab=1.5, cex.axis=1.3)
+#boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression(lambda), ylim=c(0,0.065), cex.lab=1.5, cex.axis=1.3)
 
-boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression("r"[0]), xlab="Cities", cex.lab=1.5, cex.axis=1.3)
+boxplot(lambdas_Santiago_vector[lambdas_Santiago_vector>0.0], lambdas_Valparaiso_vector[lambdas_Valparaiso_vector>0.0], names=c("Santiago","Valparaiso", "La_Serena", "Rancagua"), lambdas_La_Serena_vector[lambdas_La_Serena_vector>0.0], lambdas_Rancagua_vector[lambdas_Rancagua_vector>0.0], main="Growth rates",ylab=expression(lambda), xlab="Cities", cex.lab=1.5, cex.axis=1.3)
 
 pdf("boxplot_all.pdf", 7, 7)
 boxplot(lambdas_vector[lambdas_vector>0.0], main="Growth rates", names=c("All"), ylab=expression("r"[0]))

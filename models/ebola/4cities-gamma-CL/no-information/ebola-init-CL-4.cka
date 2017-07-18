@@ -1,6 +1,6 @@
 
 #Population_vars
-%var: 'pop-init' 100000
+%var: 'pop-init' 10000
 %var: 'infected-init' 1
 
 #Population_ratios
