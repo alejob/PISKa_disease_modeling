@@ -23,6 +23,7 @@
 %compartment: 'Rancagua' 0.109
 
 #travel_time_at_100kmh
+#(delay time)
 %link: 'highway' 'La_Serena' <-> 'Valparaiso' $0.18
 %link: 'highway' 'La_Serena' <-> 'Santiago' $0.2
 %link: 'highway' 'Valparaiso' <-> 'Santiago' $0.048

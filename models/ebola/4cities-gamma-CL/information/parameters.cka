@@ -10,15 +10,20 @@
 #%mod: [true] do $UPDATE 'Infected-time' 6.0 #hasta aca estaban seteados en 1
 
 ##################
-# RATES INFECTION#
-#################
-#Conversion rates of the original "infectious live"
+#RATES INFECTION#
+################
+#Conversion rates of the original "infectious_live"
 #when added information
 %mod: [true] do $UPDATE 'zero-info'	0.1
 %mod: [true] do $UPDATE 'zero-noinfo' 	1.5
 %mod: [true] do $UPDATE 'noinfo-info'	0.2
 %mod: [true] do $UPDATE 'noinfo-noinfo'	2.0
 %mod: [true] do $UPDATE 'info-info'	0.06
+
+#Conversion rates of the original "infectious_dead"
+#when added information
+%mod: [true] do $UPDATE 'info-dead'	0.1
+%mod: [true] do $UPDATE 'noinfo-dead'	1.5
 
 ##############
 #INFORMATION#
@@ -42,3 +47,11 @@
 %mod: [true] do $UPDATE 'live_pos-info'		0.9
 %mod: [true] do $UPDATE 'live_zero-info'  	0.05 
 %mod: [true] do $UPDATE 'live_neg-info'   	0.05
+
+###########
+#TOPOLOGY#
+#########
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~E,info~zero) 1/5
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~E,info~pos) 1/15
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~E,info~neg) 1/5
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~I) 1/60

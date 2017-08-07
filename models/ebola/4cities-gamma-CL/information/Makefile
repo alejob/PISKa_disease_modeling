@@ -7,6 +7,8 @@ endef
 
 time:
 	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 100 -t 400 -sync-t 1
+	if [ -d "base.simdir" ]; then rm -Rf "base.simdir"; fi
+	mkdir "base.simdir"
 	mv *.out base.simdir
 adjust:
 	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 125 -t 500 -sync-t 1
