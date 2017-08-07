@@ -6,27 +6,24 @@ mv Rplots.pdf $@
 endef
 
 time:
-	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 100 -t 400 -sync-t 1
+	time mpirun -n 4 PISKa -i model-gamma.cka -i CL-4cities.cka -i observables.cka -p 100 -t 400 -sync-t 1
 	if [ -d "base.simdir" ]; then rm -Rf "base.simdir"; fi
-	mkdir "base.simdir"
-	mv *.out base.simdir
-adjust:
-	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -p 125 -t 500 -sync-t 1
+	mkdir base.simdir
 	mv *.out base.simdir
 
 mod-info:
-	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka -i ebola-info_pert-fast.cka -p 100 -t 500 -sync-t 1
+	time mpirun -n 4 PISKa -i model-gamma.cka -i CL-4cities.cka -i observables.cka -i perturbation.cka -p 100 -t 500 -sync-t 1
 	mv *.out base.simdir
 
 make-precompile:
-	time mpirun -n 4 PISKa -i model-gamma.cka -i ebola-init-CL-info-4.cka -i ebola-all_obs.cka  -make-sim precomp.bout
+	time mpirun -n 4 PISKa -i model-gamma.cka -i CL-4cities.cka -i observables.cka -make-sim precomp.bout
 
 load-precompile:
 	time mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters.cka
 	mv *.out base.simdir
 
 load-precompile-adjust:
-	time mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters_test.cka  -seed 3
+	time mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters_test.cka -seed 3
 	mv *.out base.simdir
 
 load-precompile-100:
@@ -44,9 +41,6 @@ load-precompile-1000:
 		mkdir simdir_info/$$i;\
 		mv *.out simdir_info/$$i;\
 	done
-
-
-
 
 test:
 	for i in `seq 1 10`; do\
