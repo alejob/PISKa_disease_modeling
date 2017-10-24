@@ -27,11 +27,12 @@ load-precompile-adjust:
 	mv *.out base.simdir
 
 load-precompile-100:
-	for i in `seq 1 100`; do\
-		rm -r simdir_adjust/$$i;\
-		time mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters.cka;\
-		mkdir simdir_adjust/$$i;\
-		mv *.out simdir_adjust/$$i;\
+	if [ -d "simdir_info" ]; then rm -Rf "simdir_info";fi
+	mkdir simdir_info
+	for i in `seq 1 4`; do\
+		mkdir simdir_info/$$i;\
+		mpirun -n 4 PISKa -p 100 -t 400 -sync-t 1 -load-sim precomp.bout -i parameters.cka -d simdir_info/$$i &\
+		#mv *.out simdir_info/$$i;\
 	done
 
 load-precompile-1000:
@@ -44,8 +45,8 @@ load-precompile-1000:
 
 test:
 	for i in `seq 1 10`; do\
-		rm -r $$i.kaka;\
-		#echo $$i, primero;\
+		#rm -r $$i.kaka;\
+		echo $$i, primero;\
 		#touch hola;\
 		#mkdir $$i.kaka;\
 		#mv hola $$i.kaka;\

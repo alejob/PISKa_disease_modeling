@@ -10,7 +10,7 @@ cities <- transform(cities, time = time/4)
 write.table(cities,paste(args[1],"/totalCities.out", sep=""))
 
 #Finding lambda
-model <- lm( log( replace(cities$infected[2:60], cities$infected[2:60]==0,1)) ~ cities$time[2:60])
+model <- lm( log( replace(cities$infected[2:40], cities$infected[2:40]==0,1)) ~ cities$time[2:40])
 lambda <- model$coefficients[2]
 expo <- exp(predict(model))
 
@@ -63,9 +63,7 @@ title(main="States", sub="time", ylab="cases")
 pdf("infected_all_cities.pdf",7,7)
 #plot(cities $time, cities $infected, ann=F,col="black")
 plot(cities $time, cities $infected,col="black")
-legend("topleft", inset=.05, legend=round(lambda, digits=4), title=expression("r"[0]))
-lines(cities $time[2:60], expo)
-lines(cities $time[2:60], exp(cities $time[2:60]*0.047), col="red")
+lines(cities $time[2:40], expo)
 title(main="Infected", sub="time [days]", ylab="infected")
 
 dev.off()

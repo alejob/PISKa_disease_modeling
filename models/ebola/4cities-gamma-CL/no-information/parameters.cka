@@ -1,0 +1,16 @@
+#######################
+#DISEASE'S PARAMETERS#
+#####################
+%mod: [true] do $UPDATE 'infected-transmission' 0.25 #estaban todos seteados en 1
+%mod: [true] do $UPDATE 'dead-transmission' 0.2
+%mod: [true] do $UPDATE 'case-fatality-proportion' 0.7
+%mod: [true] do $UPDATE 'exposure-time' 11.0
+%mod: [true] do $UPDATE 'exposure-stages' 6.0
+%mod: [true] do $UPDATE 'Dead_contagious-time' 4.0
+%mod: [true] do $UPDATE 'Infected-time' 6.0 #hasta aca estaban seteados en 1
+
+###########
+#TOPOLOGY#
+#########
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~E) 1/5
+#$mod: [true] do $UPDATE <move-join> 'highway' Person(c~I) 1/60

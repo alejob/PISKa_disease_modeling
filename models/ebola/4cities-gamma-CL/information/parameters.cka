@@ -44,6 +44,7 @@
 %mod: [true] do $UPDATE 'p- p+_rate' 		0.001
 
 ##Information of recovered people
+#must sum 1.0
 %mod: [true] do $UPDATE 'live_pos-info'		0.9
 %mod: [true] do $UPDATE 'live_zero-info'  	0.05 
 %mod: [true] do $UPDATE 'live_neg-info'   	0.05

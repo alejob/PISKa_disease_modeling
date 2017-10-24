@@ -6,3 +6,9 @@
 %obs: 'Infected' 'I'
 %obs: 'Removed' 'R'
 %obs: 'Deads' 'D'
+%obs: 'I-positive' 'Info-pos' 
+%obs: 'I-zero' 'Info-zero' 
+%obs: 'I-negative' 'Info-neg'
+%obs: 'tot-info' 'Info-pos'+'Info-zero'+'Info-neg'   
+
+

@@ -1,0 +1,4 @@
+
+%mod: [T] > 5 do $UPDATE 'SEI inform+' 0.005;$UPDATE 'SEI inform- +' 0.00000007
+%mod: [T] > 12 do $UPDATE 'SEI inform+' 0.0;$UPDATE 'SEI inform- +' 0.0
+

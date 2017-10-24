@@ -1,0 +1,31 @@
+#%mod: [true] do $UPDATE 'infected-transmission' 0.25 #estaban todos seteados en 1
+#%mod: [true] do $UPDATE 'dead-transmission' 0.2
+#%mod: [true] do $UPDATE 'case_fatality-proportion' 0.7
+#%mod: [true] do $UPDATE 'exposure-stages' 6.0
+#%mod: [true] do $UPDATE 'exposure-time' 11.0
+#%mod: [true] do $UPDATE 'Dead_contagious-time' 4.0
+#%mod: [true] do $UPDATE 'Infected-time' 6.0 #hasta aca estaban seteados en 1
+
+#information Gov
+%mod: [true] do $UPDATE 'SEI inform+_rate'	0.022420225944423236                           
+%mod: [true] do $UPDATE 'SEI inform-_rate'	0.0095145671109862096                          
+%mod: [true] do $UPDATE 'SEI inform- +_rate'	0.01335037080116918
+
+#information to infected people           
+%mod: [true] do $UPDATE 'I inform_0+_rate'  	0.052274308581286608                       
+%mod: [true] do $UPDATE 'I inform_0-_rate'	0.060479739223029794
+
+%mod: [true] do $UPDATE 'p+ p0_rate' 0.21577474827371701                                     
+%mod: [true] do $UPDATE 'p- p0_rate' 0.073085862296889653
+%mod: [true] do $UPDATE 'p+ p-_rate' 0.21742524993229029
+%mod: [true] do $UPDATE 'p- p+_rate' 0.077379768598668061
+
+
+   
+   
+   
+   
+   
+   
+   
+   

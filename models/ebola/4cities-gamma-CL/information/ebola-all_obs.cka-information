@@ -1,0 +1,16 @@
+
+%use: 
+%obs: 'Cases' 'E'+'I'+'D'+'R'
+%obs: 'Susceptible' 'S'
+%obs: 'Exposed' 'E'
+%obs: 'Infected' 'I'
+%obs: 'Removed' 'R'
+%obs: 'Deads' 'D'
+%obs: 'I-positive' 'Info-pos' 
+%obs: 'I-zero' 'Info-zero' 
+%obs: 'I-negative' 'Info-neg'
+%obs: 'tot-info' 'Info-pos'+'Info-zero'+'Info-neg'   
+%obs: 'inf_live' 'infectious_live'
+%obs: 'Infected2' 'I'   
+%obs: 'rate-var' 'S_0 I_0_rate'   
+
