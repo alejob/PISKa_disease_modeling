@@ -1,0 +1,8 @@
+
+%use: 
+%obs: 'Cases' 'E'+'I'+'D'+'R'
+%obs: 'Susceptible' 'S'
+%obs: 'Exposed' 'E'
+%obs: 'Infected' 'I'
+%obs: 'Removed' 'R'+'DR'
+%obs: 'Deads' 'D'
