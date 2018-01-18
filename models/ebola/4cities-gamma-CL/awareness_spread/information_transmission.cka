@@ -1,0 +1,49 @@
+#informed-not_informed
+%agent: Person(c~I~NI)
+%agent: Awareness(c~1~2~3~4~5)
+
+
+%compartment: 'cityA' 10
+%compartment: 'cityB' 2
+
+%link: 'highway' 'cityA' <-> 'cityB' $0
+
+%transport: 'highway' Person(c~I) @ 0
+%transport: 'highway' Person(c~NI) @ 0
+
+# 0< rho <1
+%var: 'rho_decay' 0.5
+%var: 'Informed' Person(c~I)
+%var: 'noInformed' Person(c~NI)
+%var: 'aware' 'Informed'/'noInformed'
+
+%token: awareness
+%token: time
+%init: awareness <- 0
+%init: time <- 0
+
+
+#Rules
+'info_transmission' Person(c~NI), Person(c~I)-> Person(c~I),Person(c~I) | 1:awareness + 1:time @ 0.1*'Informed'
+#'info_transmission' Person(c~NI), Person(c~I)-> Person(c~I),Person(c~I) | 1:awareness @ 0.01
+#'info_fading' Person(c~I) -> Person(c~NI) | (0-1):awareness @ 0.1/'Informed'
+'info_fading' Person(c~I) -> Person(c~NI) | (0-1):awareness+ 1:time @ 0.0001/'time'
+#'info_fading' Person(c~I) -> Person(c~NI) | (0-1):awareness @ 0.01
+#'info_generation' Person(c~NI) -> Person(c~I) @ 0.01
+
+
+#'info_awareness' Awareness(i1!_, i2) -> Awareness(i1!_,i2!1),Awareness(i1!1,i2) @ 0.001
+
+
+%use: 'cityA'
+%init: 1000 Person(c~NI)
+%init: 1 Person(c~I)
+
+#%use: 'cityB'
+#%init: 1500 Person(c~NI)
+
+%use:
+%obs: 'informed_people' 'Informed'
+%obs: 'not_informed_people' 'noInformed'
+%obs: 'awareness' |awareness|
+%obs: 'time' |time|
